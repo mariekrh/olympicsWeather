@@ -1,0 +1,19 @@
+Package: olympicsWeather
+Title: Prévisions météo des sites olympiques
+Version: 0.0.0.9000
+Authors@R: 
+    person("Marie","Kerhoas", ,"kerhoas.marie.o@gmail.com", role = c("aut","cre"))
+Description: Ce package permet d'obtenir des prévisions météo pour des lieux définis, en l'occurence les sites olympiques.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1
+Imports:
+  httr2,
+  tibble,
+  tidygeocoder
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+
+
