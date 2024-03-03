@@ -225,14 +225,17 @@ get_forecast <- function(lieu) {
 #'
 get_forecast.numeric <- function(xy) {
   if (is.vector(xy) && length(xy) == 2) {
-    resultat <- perform_request(xy[1], xy[2]) |> unnest_response()
+    resultat <- perform_request(xy[1], xy[2]) |>
+                unnest_response()
     get_graphs(resultat)
-    resultat <- knitr::kable(resultat)
-    return(resultat)
+    return(knitr::kable(resultat))
   } else {
     return("Erreur")
   }
 }
+
+
+
 
 #' get_forecast.character
 #'
@@ -249,8 +252,8 @@ get_forecast.numeric <- function(xy) {
 #' get_forecast.character("Parc des Princes")
 get_forecast.character <- function(address) {
   if (is.character(address) && length(address) == 1) {
-    resultat <- get_gps_coordinate(address) |> get_forecast()
-    resultat <- knitr::kable(resultat)
+    resultat <- get_gps_coordinate(address) |>
+                get_forecast()
     return(resultat)
   } else {
     return("Erreur")
