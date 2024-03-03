@@ -227,6 +227,7 @@ get_forecast.numeric <- function(xy) {
   if (is.vector(xy) && length(xy) == 2) {
     resultat <- perform_request(xy[1], xy[2]) |> unnest_response()
     get_graphs(resultat)
+    resultat <- knitr::kable(resultat)
     return(resultat)
   } else {
     return("Erreur")
@@ -249,6 +250,7 @@ get_forecast.numeric <- function(xy) {
 get_forecast.character <- function(address) {
   if (is.character(address) && length(address) == 1) {
     resultat <- get_gps_coordinate(address) |> get_forecast()
+    resultat <- knitr::kable(resultat)
     return(resultat)
   } else {
     return("Erreur")
