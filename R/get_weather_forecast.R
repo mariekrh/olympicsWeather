@@ -249,6 +249,7 @@ get_forecast.numeric <- function(xy) {
 get_forecast.character <- function(address) {
   if (is.character(address) && length(address) == 1) {
     resultat <- get_gps_coordinate(address) |> get_forecast()
+    return(resultat)
   } else {
     return("Erreur")
   }
