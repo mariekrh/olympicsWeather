@@ -227,9 +227,8 @@ get_forecast.numeric <- function(xy) {
   if (is.vector(xy) && length(xy) == 2) {
     resultat <- perform_request(xy[1], xy[2]) |>
                 unnest_response()
-    graph <- get_graphs(resultat)
-    tb <- DT::datatable(resultat,options = list(pageLength = 12))
-    return(list(graph,tb))
+    get_graphs(resultat) |> print ()
+    DT::datatable(resultat,options = list(pageLength = 6))
   } else {
     return("Erreur")
   }
