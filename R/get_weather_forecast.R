@@ -227,14 +227,12 @@ get_forecast.numeric <- function(xy) {
   if (is.vector(xy) && length(xy) == 2) {
     resultat <- perform_request(xy[1], xy[2]) |>
                 unnest_response()
-    get_graphs(resultat)
-    return(knitr::kable(resultat))
+    graph <- get_graphs(resultat) |>  print()
+    tb <- DT::datatable(resultat,options = list(pageLength = 12)) |> print()
   } else {
     return("Erreur")
   }
 }
-
-
 
 
 #' get_forecast.character
