@@ -10,7 +10,7 @@
 \item{xy}{a vector, latitude and longitude}
 }
 \value{
-a tibble with 5 columns
+une liste comprenant les données sous forme de graphiques, puis de tableau de 5 colonnes
 }
 \description{
 Cette fonction permet d'obtenir des prévisions météo facilement lisibles sur

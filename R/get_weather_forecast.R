@@ -197,7 +197,7 @@ get_graphs <- function(data) {
 #' gps d'un lieu. Elles sont issues de l'API Open Météo.
 #'
 #' @param lieu coord or adress
-#' @return a tibble with 5 columns
+#' @return une liste comprenant les données sous forme de graphiques, puis de tableau de 5 colonnes
 #'
 #' @export
 #' @examples
@@ -217,7 +217,7 @@ get_forecast <- function(lieu) {
 #' sont issues de l'API Open Météo.
 #'
 #' @param xy a vector, latitude and longitude
-#' @return a tibble with 5 columns
+#' @return une liste comprenant les données sous forme de graphiques, puis de tableau de 5 colonnes
 #'
 #' @export
 #' @examples
@@ -227,8 +227,9 @@ get_forecast.numeric <- function(xy) {
   if (is.vector(xy) && length(xy) == 2) {
     resultat <- perform_request(xy[1], xy[2]) |>
                 unnest_response()
-    graph <- get_graphs(resultat) |>  print()
-    tb <- DT::datatable(resultat,options = list(pageLength = 12)) |> print()
+    graph <- get_graphs(resultat)
+    tb <- DT::datatable(resultat,options = list(pageLength = 12))
+    return(list(graph,tb))
   } else {
     return("Erreur")
   }
@@ -243,7 +244,7 @@ get_forecast.numeric <- function(xy) {
 #' sont issues de l'API Open Météo.
 #'
 #' @param address a character, an address
-#' @return a tibble with 5 columns
+#' @return une liste comprenant les données sous forme de graphiques, puis de tableau de 5 colonnes
 #'
 #' @export
 #' @examples
