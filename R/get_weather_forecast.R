@@ -228,7 +228,8 @@ get_forecast.numeric <- function(xy) {
     resultat <- perform_request(xy[1], xy[2]) |>
                 unnest_response()
     get_graphs(resultat) |> print ()
-    DT::datatable(resultat,options = list(pageLength = 6))
+    resultat <-DT::datatable(resultat,options = list(pageLength = 6))
+    return(resultat)
   } else {
     return("Erreur")
   }
