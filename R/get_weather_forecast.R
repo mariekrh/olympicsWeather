@@ -228,7 +228,7 @@ get_forecast.numeric <- function(xy) {
     resultat <- perform_request(xy[1], xy[2]) |>
                 unnest_response()
     graph <- get_graphs(resultat) |>  print()
-    tb <- DT::datatable(resultat,options = list(pageLength = 6)) |> print()
+    tb <- knitr::kable(resultat)
   } else {
     return("Erreur")
   }
