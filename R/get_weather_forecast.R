@@ -105,7 +105,7 @@ get_gps_coordinate <- function (adresse) {
 #'
 get_graphs <- function(data) {
 
-  graph1 <- ggplot2::ggplot(data, ggplot2::aes(x = seq_along(data$temperature_celsius), y = data$temperature_celsius)) +
+  graph1 <- ggplot2::ggplot(data, ggplot2::aes(x = seq_along(temperature_celsius), y = temperature_celsius)) +
     ggplot2::geom_line() +
     ggplot2::labs(title = "Prévisions de température", y = "Température en °C", x = "Temps") +
     ggplot2::theme_light() +
@@ -113,7 +113,7 @@ get_graphs <- function(data) {
     ggplot2::scale_x_continuous(breaks = c(1, 24, 48, 72, 96, 120, 144), labels = c("J0", "J1", "J2", "J3", "J4", "J5", "J6")) +
     ggplot2::theme(panel.grid.major.x = ggplot2::element_blank(), panel.grid.minor.x = ggplot2::element_blank())
 
-  graph2 <- ggplot2::ggplot(data, ggplot2::aes(x = seq_along(data$temperature_ressentie_celsius), y = data$temperature_ressentie_celsius)) +
+  graph2 <- ggplot2::ggplot(data, ggplot2::aes(x = seq_along(temperature_ressentie_celsius), y = temperature_ressentie_celsius)) +
     ggplot2::geom_line() +
     ggplot2::labs(title = "Prévisions de température ressentie", y = "Température en °C", x = "Temps") +
     ggplot2::theme_light() +
@@ -121,7 +121,7 @@ get_graphs <- function(data) {
     ggplot2::scale_x_continuous(breaks = c(1, 24, 48, 72, 96, 120, 144), labels = c("J0", "J1", "J2", "J3", "J4", "J5", "J6")) +
     ggplot2::theme(panel.grid.major.x = ggplot2::element_blank(), panel.grid.minor.x = ggplot2::element_blank())
 
-  graph3 <- ggplot2::ggplot(data, ggplot2::aes(x = seq_along(data$chance_pluie), y = data$chance_pluie)) +
+  graph3 <- ggplot2::ggplot(data, ggplot2::aes(x = seq_along(chance_pluie), y = chance_pluie)) +
     ggplot2::geom_line() +
     ggplot2::labs(title = "Prévisions de probabilité de pluie", y = "Probabilité de pluie en %", x = "Temps") +
     ggplot2::theme_light() +
@@ -129,7 +129,7 @@ get_graphs <- function(data) {
     ggplot2::scale_x_continuous(breaks = c(1, 24, 48, 72, 96, 120, 144), labels = c("J0", "J1", "J2", "J3", "J4", "J5", "J6")) +
     ggplot2::theme(panel.grid.major.x = ggplot2::element_blank(), panel.grid.minor.x = ggplot2::element_blank())
 
-  graph4 <- ggplot2::ggplot(data, ggplot2::aes(x = seq_along(data$quantite_pluie), y = data$quantite_pluie)) +
+  graph4 <- ggplot2::ggplot(data, ggplot2::aes(x = seq_along(quantite_pluie), y = quantite_pluie)) +
     ggplot2::geom_line() +
     ggplot2::labs(title = "Prévisions de quantité de pluie", y = "Quantité de pluie en mm", x = "Temps") +
     ggplot2::theme_light() +
