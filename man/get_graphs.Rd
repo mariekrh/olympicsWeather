@@ -10,13 +10,13 @@ get_graphs(data)
 \item{data}{a tibble with 5 columns}
 }
 \value{
-4 plots, the evolution of the values
+a list of 4 plots, the evolution of the values
 }
 \description{
 Cette fonction affiche 4 graphiques représentant chacun l'évolution d'une des
 caractéristiques météo prévues.
 }
 \examples{
-get_graphs(get_forecast(c(48.841363,2.253069)))
+get_graphs(unnest_response(perform_request(48.85,2.35)))
 
 }

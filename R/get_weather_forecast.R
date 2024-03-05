@@ -98,92 +98,50 @@ get_gps_coordinate <- function (adresse) {
 #'
 #' @param data a tibble with 5 columns
 #'
-#' @return 4 plots, the evolution of the values
+#' @return a list of 4 plots, the evolution of the values
 #'
 #' @examples
-#' get_graphs(get_forecast(c(48.841363,2.253069)))
+#' get_graphs(unnest_response(perform_request(48.85,2.35)))
 #'
 get_graphs <- function(data) {
-  graphics::par(mfrow = c(2, 2))
 
-  plot(
-    data$temperature_celsius,
-    type = "l",
-    main = "Prévisions de température",
-    ylab = "Température en °C",
-    xlab = "Temps",
-    xaxt = "n"
-  )
-  graphics::abline(
-    v = c(24, 48, 72, 96, 120, 144),
-    col = "lightgray",
-    lty = 2
-  )
-  graphics::axis(
-    side = 1,
-    at = c(1, 24, 48, 72, 96, 120, 144),
-    labels = c("J0", "J1", "J2", "J3", "J4", "J5", "J6")
-  )
+  graph1 <- ggplot2::ggplot(data, ggplot2::aes(x = seq_along(data$temperature_celsius), y = data$temperature_celsius)) +
+    ggplot2::geom_line() +
+    ggplot2::labs(title = "Prévisions de température", y = "Température en °C", x = "Temps") +
+    ggplot2::theme_light() +
+    ggplot2::geom_vline(xintercept = c(24, 48, 72, 96, 120, 144), color = "lightgray", linetype = "dashed") +
+    ggplot2::scale_x_continuous(breaks = c(1, 24, 48, 72, 96, 120, 144), labels = c("J0", "J1", "J2", "J3", "J4", "J5", "J6")) +
+    ggplot2::theme(panel.grid.major.x = ggplot2::element_blank(), panel.grid.minor.x = ggplot2::element_blank())
 
-  plot(
-    data$temperature_ressentie_celsius,
-    type = "l",
-    main = "Prévisions de température ressentie",
-    ylab = "Température en °C",
-    xlab = "Temps",
-    xaxt = "n"
-  )
-  graphics::abline(
-    v = c(24, 48, 72, 96, 120, 144),
-    col = "lightgray",
-    lty = 2
-  )
-  graphics::axis(
-    side = 1,
-    at = c(1, 24, 48, 72, 96, 120, 144),
-    labels = c("J0", "J1", "J2", "J3", "J4", "J5", "J6")
-  )
+  graph2 <- ggplot2::ggplot(data, ggplot2::aes(x = seq_along(data$temperature_ressentie_celsius), y = data$temperature_ressentie_celsius)) +
+    ggplot2::geom_line() +
+    ggplot2::labs(title = "Prévisions de température ressentie", y = "Température en °C", x = "Temps") +
+    ggplot2::theme_light() +
+    ggplot2::geom_vline(xintercept = c(24, 48, 72, 96, 120, 144), color = "lightgray", linetype = "dashed") +
+    ggplot2::scale_x_continuous(breaks = c(1, 24, 48, 72, 96, 120, 144), labels = c("J0", "J1", "J2", "J3", "J4", "J5", "J6")) +
+    ggplot2::theme(panel.grid.major.x = ggplot2::element_blank(), panel.grid.minor.x = ggplot2::element_blank())
 
-  plot(
-    data$chance_pluie,
-    type = "l",
-    main = "Prévisions de probalilité de pluie",
-    ylab = "Probalibilité de pluie en %",
-    xlab = "Temps",
-    xaxt = "n"
-  )
-  graphics::abline(
-    v = c(24, 48, 72, 96, 120, 144),
-    col = "lightgray",
-    lty = 2
-  )
-  graphics::axis(
-    side = 1,
-    at = c(1, 24, 48, 72, 96, 120, 144),
-    labels = c("J0", "J1", "J2", "J3", "J4", "J5", "J6")
-  )
+  graph3 <- ggplot2::ggplot(data, ggplot2::aes(x = seq_along(data$chance_pluie), y = data$chance_pluie)) +
+    ggplot2::geom_line() +
+    ggplot2::labs(title = "Prévisions de probabilité de pluie", y = "Probabilité de pluie en %", x = "Temps") +
+    ggplot2::theme_light() +
+    ggplot2::geom_vline(xintercept = c(24, 48, 72, 96, 120, 144), color = "lightgray", linetype = "dashed") +
+    ggplot2::scale_x_continuous(breaks = c(1, 24, 48, 72, 96, 120, 144), labels = c("J0", "J1", "J2", "J3", "J4", "J5", "J6")) +
+    ggplot2::theme(panel.grid.major.x = ggplot2::element_blank(), panel.grid.minor.x = ggplot2::element_blank())
 
-  plot(
-    data$quantite_pluie,
-    type = "l",
-    main = "Prévisions de quantité de pluie",
-    ylab = "Quantité de pluie en mm",
-    xlab = "Temps",
-    xaxt = "n"
-  )
-  graphics::abline(
-    v = c(24, 48, 72, 96, 120, 144),
-    col = "lightgray",
-    lty = 2
-  )
-  graphics::axis(
-    side = 1,
-    at = c(1, 24, 48, 72, 96, 120, 144),
-    labels = c("J0", "J1", "J2", "J3", "J4", "J5", "J6")
-  )
+  graph4 <- ggplot2::ggplot(data, ggplot2::aes(x = seq_along(data$quantite_pluie), y = data$quantite_pluie)) +
+    ggplot2::geom_line() +
+    ggplot2::labs(title = "Prévisions de quantité de pluie", y = "Quantité de pluie en mm", x = "Temps") +
+    ggplot2::theme_light() +
+    ggplot2::geom_vline(xintercept = c(24, 48, 72, 96, 120, 144), color = "lightgray", linetype = "dashed") +
+    ggplot2:: scale_x_continuous(breaks = c(1, 24, 48, 72, 96, 120, 144), labels = c("J0", "J1", "J2", "J3", "J4", "J5", "J6")) +
+    ggplot2::theme(panel.grid.major.x = ggplot2::element_blank(), panel.grid.minor.x = ggplot2::element_blank())
 
-  graphics::par(mfrow = c(1, 1))
+  graphs <- list(graph1, graph2, graph3, graph4)
+
+  return(graphs)
 }
+
 
 
 # Fonction finale
@@ -227,9 +185,10 @@ get_forecast.numeric <- function(xy) {
   if (is.vector(xy) && length(xy) == 2) {
     resultat <- perform_request(xy[1], xy[2]) |>
                 unnest_response()
-    graph <- get_graphs(resultat)
     tb <- knitr::kable(resultat)
-    return(list(graph,tb))
+    graph <- get_graphs(resultat)
+    #graph <- gridExtra::grid.arrange(graph[[1]], graph[[2]], graph[[3]], graph[[4]], ncol = 2, nrow = 2)
+    return(list(graphs = graph, table = tb))
   } else {
     return("Erreur")
   }
