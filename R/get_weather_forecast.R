@@ -8,8 +8,8 @@ url <- "https://api.open-meteo.com/v1/forecast"
 #'
 #'@description
 #'Cette fonction permet d'effectuer une requête sur l'API Open Meteo à partir
-#'de coordonnées gps. Elle porte sur l'heure,la température, la température
-#'ressentie, le % de chance qu'il pleuve et la quantité de pluie prévue sur 1
+#'de coordonnées gps. Elle porte sur l'heure, la température, la température
+#'ressentie, la probabilité qu'il pleuve et la quantité de pluie prévue sur 1
 #'semaine.
 #'
 #' @param latitude latitude (numeric)
@@ -46,14 +46,14 @@ perform_request <- function(latitude, longitude) {
 #' unnest_response
 #'
 #' @description
-#' Cette fonction permet d'améliorer la lisibilité des réultats obtenus grâce à
-#' la fonction perform_request. Elle permet de créer un tible de 5 colonnes ou
-#' chacune d'elles est une catégorie d'information et chaque ligne correspond à
-#' une prévision et donc à 1 heure.
+#' Cette fonction permet d'améliorer la lisibilité des résultats obtenus grâce à
+#' la fonction perform_request. Elle permet de créer un tibble de 5 colonnes où
+#' chacune d'elles est une catégorie d'informations et chaque ligne correspond à
+#' une prévision, donc à 1 heure.
 #'
-#' @param resp a tibble with 5 rows, from the request on the API
+#' @param resp un tibble avec 5 lignes
 #'
-#' @return a tibble with 5 columns, more readable
+#' @return un tibble avec 5 colonnes
 #'
 #' @examples
 #' unnest_response(perform_request(48.85,2.35))
@@ -73,11 +73,11 @@ unnest_response <- function (resp) {
 #'
 #' @description
 #' Cette fonction permet d'obtenir un vecteur de coordonnées (latitude et
-#' longitude) à partir d'une addresse ou d'un nom de lieu.
+#' longitude) à partir d'une adresse ou d'un nom de lieu.
 #'
 #' @param adresse une adresse
 #'
-#' @return un vecteur de coordonnées
+#' @return un vecteur de coordonnées (lat, long)
 #'
 #' @examples
 #' get_gps_coordinate("Parc des Princes")
@@ -92,36 +92,31 @@ get_gps_coordinate <- function (adresse) {
 #' get_graphs
 #'
 #' @description
-#' Cette fonction affiche 4 graphiques représentant chacun l'évolution d'une des
+#' Cette fonction affiche 3 graphiques représentant chacun l'évolution des
 #' caractéristiques météo prévues.
 #'
 #'
-#' @param data a tibble with 5 columns
+#' @param data un tibble avec 5 colonnes
 #'
-#' @return a list of 4 plots, the evolution of the values
+#' @return une liste de 3 graphiques
 #'
 #' @examples
 #' get_graphs(unnest_response(perform_request(48.85,2.35)))
 #'
 get_graphs <- function(data) {
 
-  graph1 <- ggplot2::ggplot(data, ggplot2::aes(x = seq_along(temperature_celsius), y = temperature_celsius)) +
-    ggplot2::geom_line() +
-    ggplot2::labs(title = "Prévisions de température", y = "Température en °C", x = "Temps") +
+  graph_temp <- ggplot2::ggplot(data) +
+    ggplot2::geom_line(ggplot2::aes(x = seq_along(temperature_celsius), y = temperature_celsius, color = "Température réelle")) +
+    ggplot2::geom_line(ggplot2::aes(x = seq_along(temperature_ressentie_celsius), y = temperature_ressentie_celsius, color = "Température ressentie")) +
+    ggplot2::labs(title = "Prévisions de température réelle et ressentie", y = "Température en °C", x = "Temps") +
     ggplot2::theme_light() +
-    ggplot2::geom_vline(xintercept = c(24, 48, 72, 96, 120, 144), color = "lightgray", linetype = "dashed") +
+    ggplot2::geom_vline(xintercept = c(24, 48, 72, 96, 120, 144), color = "black", linetype = "dashed") +
     ggplot2::scale_x_continuous(breaks = c(1, 24, 48, 72, 96, 120, 144), labels = c("J0", "J1", "J2", "J3", "J4", "J5", "J6")) +
-    ggplot2::theme(panel.grid.major.x = ggplot2::element_blank(), panel.grid.minor.x = ggplot2::element_blank())
+    ggplot2::theme(panel.grid.major.x = ggplot2::element_blank(), panel.grid.minor.x = ggplot2::element_blank()) +
+    ggplot2::scale_color_manual(values = c("Température réelle" = "#4EA72E", "Température ressentie" = "#E97132")) +
+    ggplot2::theme(legend.position = "bottom")
 
-  graph2 <- ggplot2::ggplot(data, ggplot2::aes(x = seq_along(temperature_ressentie_celsius), y = temperature_ressentie_celsius)) +
-    ggplot2::geom_line() +
-    ggplot2::labs(title = "Prévisions de température ressentie", y = "Température en °C", x = "Temps") +
-    ggplot2::theme_light() +
-    ggplot2::geom_vline(xintercept = c(24, 48, 72, 96, 120, 144), color = "lightgray", linetype = "dashed") +
-    ggplot2::scale_x_continuous(breaks = c(1, 24, 48, 72, 96, 120, 144), labels = c("J0", "J1", "J2", "J3", "J4", "J5", "J6")) +
-    ggplot2::theme(panel.grid.major.x = ggplot2::element_blank(), panel.grid.minor.x = ggplot2::element_blank())
-
-  graph3 <- ggplot2::ggplot(data, ggplot2::aes(x = seq_along(chance_pluie), y = chance_pluie)) +
+  graph_pb_pluie <- ggplot2::ggplot(data, ggplot2::aes(x = seq_along(chance_pluie), y = chance_pluie)) +
     ggplot2::geom_line() +
     ggplot2::labs(title = "Prévisions de probabilité de pluie", y = "Probabilité de pluie en %", x = "Temps") +
     ggplot2::theme_light() +
@@ -129,7 +124,7 @@ get_graphs <- function(data) {
     ggplot2::scale_x_continuous(breaks = c(1, 24, 48, 72, 96, 120, 144), labels = c("J0", "J1", "J2", "J3", "J4", "J5", "J6")) +
     ggplot2::theme(panel.grid.major.x = ggplot2::element_blank(), panel.grid.minor.x = ggplot2::element_blank())
 
-  graph4 <- ggplot2::ggplot(data, ggplot2::aes(x = seq_along(quantite_pluie), y = quantite_pluie)) +
+  graph_qt_pluie <- ggplot2::ggplot(data, ggplot2::aes(x = seq_along(quantite_pluie), y = quantite_pluie)) +
     ggplot2::geom_line() +
     ggplot2::labs(title = "Prévisions de quantité de pluie", y = "Quantité de pluie en mm", x = "Temps") +
     ggplot2::theme_light() +
@@ -137,7 +132,7 @@ get_graphs <- function(data) {
     ggplot2:: scale_x_continuous(breaks = c(1, 24, 48, 72, 96, 120, 144), labels = c("J0", "J1", "J2", "J3", "J4", "J5", "J6")) +
     ggplot2::theme(panel.grid.major.x = ggplot2::element_blank(), panel.grid.minor.x = ggplot2::element_blank())
 
-  graphs <- list(graph1, graph2, graph3, graph4)
+  graphs <- list(graph_temp, graph_pb_pluie, graph_qt_pluie)
 
   return(graphs)
 }
@@ -154,8 +149,8 @@ get_graphs <- function(data) {
 #' 1 semaine, heure par heure, à partir du nom, de l'adresse ou des coordonnées
 #' gps d'un lieu. Elles sont issues de l'API Open Météo.
 #'
-#' @param lieu coord or adress
-#' @return a tibble with 5 columns
+#' @param lieu des coordonnées ou une adresse
+#' @return une liste de 2 éléments : une liste de 3 graphiques et une table
 #'
 #' @export
 #' @examples
@@ -174,8 +169,8 @@ get_forecast <- function(lieu) {
 #' 1 semaine, heure par heure, à partir des coordonnées gps d'un lieu. Elles
 #' sont issues de l'API Open Météo.
 #'
-#' @param xy a vector, latitude and longitude
-#' @return a tibble with 5 columns
+#' @param xy un vecteur comprenant une latitude et une longitude
+#' @return une liste de 2 éléments : une liste de 3 graphiques et une table
 #'
 #' @export
 #' @examples
@@ -202,8 +197,8 @@ get_forecast.numeric <- function(xy) {
 #' 1 semaine, heure par heure, à partir du nom ou de l'adresse d'un lieu. Elles
 #' sont issues de l'API Open Météo.
 #'
-#' @param address a character, an address
-#' @return a tibble with 5 columns
+#' @param address une adresse
+#' @return une liste de 2 éléments : une liste de 3 graphiques et une table
 #'
 #' @export
 #' @examples

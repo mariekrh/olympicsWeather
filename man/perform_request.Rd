@@ -16,8 +16,8 @@ un tibble avec 5 lignes
 }
 \description{
 Cette fonction permet d'effectuer une requête sur l'API Open Meteo à partir
-de coordonnées gps. Elle porte sur l'heure,la température, la température
-ressentie, le \% de chance qu'il pleuve et la quantité de pluie prévue sur 1
+de coordonnées gps. Elle porte sur l'heure, la température, la température
+ressentie, la probabilité qu'il pleuve et la quantité de pluie prévue sur 1
 semaine.
 }
 \examples{

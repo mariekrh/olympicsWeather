@@ -7,16 +7,16 @@
 unnest_response(resp)
 }
 \arguments{
-\item{resp}{a tibble with 5 rows, from the request on the API}
+\item{resp}{un tibble avec 5 lignes}
 }
 \value{
-a tibble with 5 columns, more readable
+un tibble avec 5 colonnes
 }
 \description{
-Cette fonction permet d'améliorer la lisibilité des réultats obtenus grâce à
-la fonction perform_request. Elle permet de créer un tible de 5 colonnes ou
-chacune d'elles est une catégorie d'information et chaque ligne correspond à
-une prévision et donc à 1 heure.
+Cette fonction permet d'améliorer la lisibilité des résultats obtenus grâce à
+la fonction perform_request. Elle permet de créer un tibble de 5 colonnes où
+chacune d'elles est une catégorie d'informations et chaque ligne correspond à
+une prévision, donc à 1 heure.
 }
 \examples{
 unnest_response(perform_request(48.85,2.35))

@@ -7,10 +7,10 @@
 \method{get_forecast}{character}(address)
 }
 \arguments{
-\item{address}{a character, an address}
+\item{address}{une adresse}
 }
 \value{
-a tibble with 5 columns
+une liste de 2 éléments : une liste de 3 graphiques et une table
 }
 \description{
 Cette fonction permet d'obtenir des prévisions météo facilement lisibles sur

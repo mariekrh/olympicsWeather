@@ -7,10 +7,10 @@
 get_forecast(lieu)
 }
 \arguments{
-\item{lieu}{coord or adress}
+\item{lieu}{des coordonnées ou une adresse}
 }
 \value{
-a tibble with 5 columns
+une liste de 2 éléments : une liste de 3 graphiques et une table
 }
 \description{
 Cette fonction permet d'obtenir des prévisions météo facilement lisibles sur

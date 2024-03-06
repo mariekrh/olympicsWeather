@@ -10,11 +10,11 @@ get_gps_coordinate(adresse)
 \item{adresse}{une adresse}
 }
 \value{
-un vecteur de coordonnées
+un vecteur de coordonnées (lat, long)
 }
 \description{
 Cette fonction permet d'obtenir un vecteur de coordonnées (latitude et
-longitude) à partir d'une addresse ou d'un nom de lieu.
+longitude) à partir d'une adresse ou d'un nom de lieu.
 }
 \examples{
 get_gps_coordinate("Parc des Princes")

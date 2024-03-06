@@ -7,13 +7,13 @@
 get_graphs(data)
 }
 \arguments{
-\item{data}{a tibble with 5 columns}
+\item{data}{un tibble avec 5 colonnes}
 }
 \value{
-a list of 4 plots, the evolution of the values
+une liste de 3 graphiques
 }
 \description{
-Cette fonction affiche 4 graphiques représentant chacun l'évolution d'une des
+Cette fonction affiche 3 graphiques représentant chacun l'évolution des
 caractéristiques météo prévues.
 }
 \examples{

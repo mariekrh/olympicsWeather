@@ -7,10 +7,10 @@
 \method{get_forecast}{numeric}(xy)
 }
 \arguments{
-\item{xy}{a vector, latitude and longitude}
+\item{xy}{un vecteur comprenant une latitude et une longitude}
 }
 \value{
-a tibble with 5 columns
+une liste de 2 éléments : une liste de 3 graphiques et une table
 }
 \description{
 Cette fonction permet d'obtenir des prévisions météo facilement lisibles sur
