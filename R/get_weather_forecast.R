@@ -108,7 +108,7 @@ get_graphs <- function(data) {
   graph_temp <- ggplot2::ggplot(data) +
     ggplot2::geom_line(ggplot2::aes(x = seq_along(temperature_celsius), y = temperature_celsius, color = "Température réelle")) +
     ggplot2::geom_line(ggplot2::aes(x = seq_along(temperature_ressentie_celsius), y = temperature_ressentie_celsius, color = "Température ressentie")) +
-    ggplot2::labs(title = "Prévisions de température réelle et ressentie", y = "Température en °C", x = "Temps", color = "Légende") +
+    ggplot2::labs(title = "Prévisions réelle et ressentie", y = "Température en °C", x = "Temps", color = "Légende") +
     ggplot2::theme_light() +
     ggplot2::geom_vline(xintercept = c(24, 48, 72, 96, 120, 144), color = "black", linetype = "dashed") +
     ggplot2::scale_x_continuous(breaks = c(1, 24, 48, 72, 96, 120, 144), labels = c("J0", "J1", "J2", "J3", "J4", "J5", "J6")) +
